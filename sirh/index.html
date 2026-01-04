@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet SIRH | Dhellye EWEMBE - Application de Gestion RH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page">
+        <div class="landing-header">
+            <div class="landing-logo">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">
+                    <h1>SIRH Pro</h1>
+                    <p>Système Intégré de Gestion RH</p>
+                </div>
+            </div>
+            <div class="landing-nav">
+                <button class="btn btn-outline" onclick="showLogin()">Se connecter</button>
+                <button class="btn btn-secondary" onclick="showRegister()">Créer un compte</button>
+            </div>
+        </div>
+
+        <div class="hero-section">
+            <div class="hero-badge">✨ Gratuit et Open Source</div>
+            <h1 class="hero-title">
+                La solution RH<br>
+                <span class="gradient-text">simple et efficace</span>
+            </h1>
+            <p class="hero-subtitle">
+                Gérez vos employés, congés et absences en toute simplicité. 
+                Interface moderne, intuitive et accessible partout.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="startDemoManager()">
+                     Démo Manager RH
+                </button>
+                <button class="btn btn-primary" onclick="startDemoEmployee()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                     Démo Employé
+                </button>
+                <button class="btn btn-secondary" onclick="showRegister()">
+                    Créer mon compte gratuit
+                </button>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <div class="feature-card">
+                 <div class="feature-icon"></div>
+                <!-- <div class="feature-icon">👥</div> -->
+                <div class="feature-title">Gestion des Employés</div>
+                <div class="feature-description">
+                    Centralisez toutes les informations de vos collaborateurs en un seul endroit
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"></div>
+                <!-- <div class="feature-icon">📅</div> -->
+                <div class="feature-title">Suivi des Congés</div>
+                <div class="feature-description">
+                    Gérez les demandes de congés avec validation en un clic
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"></div>
+                <!-- <div class="feature-icon">📊</div> -->
+                <div class="feature-title">Tableau de Bord</div>
+                <div class="feature-description">
+                    Visualisez vos statistiques RH en temps réel
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"></div>
+                <!-- <div class="feature-icon">🔒</div> -->
+                <div class="feature-title">Sécurisé</div>
+                <div class="feature-description">
+                    Vos données sont stockées de manière sécurisée et privée
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Banner -->
+    <div id="demoBanner" class="demo-banner">
+        <span> Mode Démonstration - Les données ne seront pas sauvegardées</span>
+        <button onclick="showRegister()">Créer mon compte pour sauvegarder</button>
+    </div>
+
+    <!-- Auth Container -->
+    <div id="authContainer" class="auth-container">
+        <div class="auth-box">
+            <button class="close-btn" onclick="closeAuth()">×</button>
+            <div class="auth-header">
+                <!-- <div class="auth-logo">S</div> -->
+                <h1 class="auth-title" id="authTitle">Connexion</h1>
+                <p class="auth-subtitle" id="authSubtitle">Accédez à votre espace RH</p>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" style="display: block;">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required placeholder="votre@email.fr">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Se connecter</button>
+                <button type="button" class="btn btn-link btn-full" onclick="switchToRegister()">
+                    Pas encore de compte ? Créer un compte
+                </button>
+                <button type="button" class="btn btn-link btn-full" onclick="switchToAlternantAccess()" style="font-size: 13px; color: #8b5cf6;">
+                     Vous avez un code d'accès alternant/stagiaire ?
+                </button>
+            </form>
+
+            <!-- Alternant Access Form -->
+            <form id="alternantAccessForm" style="display: none;">
+                <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: #8b5cf6; font-weight: 600; margin-bottom: 4px;">
+                         Connexion Alternant/Stagiaire
+                    </div>
+                    <div style="font-size: 12px; color: #94a3b8;">
+                        Entrez le code d'accès fourni par votre responsable RH.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Code d'accès</label>
+                    <input type="text" id="alternantAccessCode" required placeholder="Ex: ABC12345" style="text-transform: uppercase; letter-spacing: 2px; font-size: 16px; font-weight: 600;">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Accéder</button>
+                <button type="button" class="btn btn-link btn-full" onclick="switchToLogin()">
+                    ← Retour à la connexion normale
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+                <!-- Company Selection -->
+                <div class="form-group">
+                    <label>Situation de votre entreprise</label>
+                    <select id="companyMode" required onchange="toggleCompanyFields()">
+                        <option value="">Sélectionner...</option>
+                        <option value="create"> Créer une nouvelle entreprise</option>
+                        <option value="join"> Rejoindre une entreprise existante</option>
+                    </select>
+                </div>
+
+                <!-- Create Company Fields -->
+                <div id="createCompanyFields" style="display: none;">
+                    <div class="form-group">
+                        <label>Nom de votre entreprise</label>
+                        <input type="text" id="companyName" placeholder="Acme Corporation">
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="font-size: 12px; color: #f59e0b; font-weight: 600; margin-bottom: 4px;">
+                             Vous serez l'administrateur
+                        </div>
+                        <div style="font-size: 12px; color: #94a3b8;">
+                            En créant l'entreprise, vous devenez automatiquement Manager RH avec tous les droits.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Join Company Fields -->
+                <div id="joinCompanyFields" style="display: none;">
+                    <div class="form-group">
+                        <label>Code d'entreprise</label>
+                        <input type="text" id="companyCode" placeholder="Ex: ABC123" style="text-transform: uppercase;">
+                    </div>
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="font-size: 12px; color: #3b82f6; font-weight: 600; margin-bottom: 4px;">
+                             Demandez le code à votre RH
+                        </div>
+                        <div style="font-size: 12px; color: #94a3b8;">
+                            Votre administrateur RH vous a communiqué un code unique pour rejoindre l'entreprise.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" id="registerName" required placeholder="Jean Dupont">
+                </div>
+                <div class="form-group">
+                    <label>Email professionnel</label>
+                    <input type="email" id="registerEmail" required placeholder="votre@email.fr">
+                </div>
+                
+                <div class="form-group" id="roleGroup" style="display: none;">
+                    <label>Rôle dans l'entreprise</label>
+                    <select id="registerRole">
+                        <option value="">Sélectionner votre rôle...</option>
+                        <option value="admin"> Manager RH / Administrateur</option>
+                        <option value="manager"> Manager / Responsable d'équipe</option>
+                        <option value="employee"> Employé</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="departmentGroup" style="display: none;">
+                    <label>Département géré</label>
+                    <select id="registerDepartment">
+                        <option value="">Sélectionner...</option>
+                        <option value="Ressources Humaines">Ressources Humaines</option>
+                        <option value="IT">IT</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Production">Production</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="registerPassword" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Confirmer le mot de passe</label>
+                    <input type="password" id="registerPasswordConfirm" required placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Créer mon compte</button>
+                <button type="button" class="btn btn-link btn-full" onclick="switchToLogin()">
+                    Déjà un compte ? Se connecter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer" class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-logo">S</div>
+                    <div class="header-title">
+                        <h1>SIRH Pro</h1>
+                        <p>Système Intégré de Gestion RH</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-name" id="currentUserName"></div>
+                        <div class="user-email" id="currentUserEmail"></div>
+                        <div class="user-role" id="currentUserRole" style="font-size: 11px; color: #f59e0b; font-weight: 600; text-transform: uppercase;"></div>
+                    </div>
+                    <button class="btn-logout" onclick="logout()">
+                        <span id="logoutText">Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-container" id="mainNavigation">
+            <button class="nav-btn active" onclick="showView('dashboard')">
+                <!-- <span>📊</span>  -->
+                Tableau de Bord
+            </button>
+            <button class="nav-btn" onclick="showView('employees')" id="navEmployees">
+                <!-- <span>👥</span>  -->
+                Employés
+            </button>
+            <button class="nav-btn" onclick="showView('leaves')">
+                <!-- <span>📅</span> -->
+                 Congés
+            </button>
+            <button class="nav-btn" onclick="showView('absences')" id="navAbsences">
+                <!-- <span>🕐</span>  -->
+                Absences
+            </button>
+            <button class="nav-btn" onclick="showView('documents')" id="navDocuments">
+                <!-- <span>📁</span>  -->
+                Documents
+            </button>
+            <button class="nav-btn" onclick="showView('alternants')" id="navAlternants">
+                <span></span> Alternants
+            </button>
+            <button class="nav-btn" onclick="showView('settings')" id="navSettings" style="display: none;">
+                <!-- <span>⚙️</span>  -->
+                Paramètres
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content-container">
+            <!-- Dashboard View -->
+            <div id="dashboardView" class="view active">
+                <!-- Employee Dashboard (Personalized) -->
+                <div id="employeeDashboard" style="display: none;">
+                    <h2 style="font-size: 32px; margin-bottom: 32px; font-weight: 600;">
+                        👋 Bienvenue <span id="empWelcomeName"></span>
+                    </h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Mes Congés Restants</div>
+                                    <div class="stat-value" id="empLeaveDays">25</div>
+                                </div>
+                                <div class="stat-icon">🏖️</div>
+                            </div>
+                            <div class="stat-footer">
+                                📅 Jours disponibles cette année
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Mes Demandes en Attente</div>
+                                    <div class="stat-value" id="empPendingLeaves">0</div>
+                                </div>
+                                <div class="stat-icon">⏳</div>
+                            </div>
+                            <div class="stat-footer">
+                                ⚠️ En attente d'approbation
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Congés Approuvés</div>
+                                    <div class="stat-value" id="empApprovedLeaves">0</div>
+                                </div>
+                                <div class="stat-icon">✅</div>
+                            </div>
+                            <div class="stat-footer">
+                                🎉 Congés confirmés à venir
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3 style="font-size: 18px; margin-bottom: 20px; color: #f59e0b; font-weight: 600;">
+                                Mes Prochains Congés
+                            </h3>
+                            <div id="empUpcomingLeaves"></div>
+                            <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="showView('leaves')">
+                                ➕ Demander un Congé
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="font-size: 18px; margin-bottom: 20px; color: #f59e0b; font-weight: 600;">
+                                Qui est Absent Aujourd'hui ?
+                            </h3>
+                            <div id="empTeamAbsences"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manager/Admin Dashboard (Original) -->
+                <div id="managerDashboard">
+                    <h2 style="font-size: 32px; margin-bottom: 32px; font-weight: 600;">Tableau de Bord</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Total Employés</div>
+                                    <div class="stat-value" id="totalEmployees">0</div>
+                                </div>
+                                <div class="stat-icon">👥</div>
+                            </div>
+                            <div class="stat-footer">
+                                📈 Personnel actif dans l'entreprise
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Demandes en attente</div>
+                                    <div class="stat-value" id="pendingLeaves">0</div>
+                                </div>
+                                <div class="stat-icon">📅</div>
+                            </div>
+                            <div class="stat-footer">
+                                ⚠️ Congés à valider
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Taux d'Absence</div>
+                                    <div class="stat-value" id="absenceRate">0%</div>
+                                </div>
+                                <div class="stat-icon">🕐</div>
+                            </div>
+                            <div class="stat-footer">
+                                📊 Basé sur le dernier mois
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3 style="font-size: 18px; margin-bottom: 20px; color: #f59e0b; font-weight: 600;">Congés à Venir</h3>
+                            <div id="upcomingLeaves"></div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="font-size: 18px; margin-bottom: 20px; color: #f59e0b; font-weight: 600;">Récentes Absences</h3>
+                            <div id="recentAbsences"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employees View -->
+            <div id="employeesView" class="view">
+                <div class="view-header">
+                    <h2>Gestion des Employés</h2>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-success" onclick="exportToExcel('employees')" id="btnExportEmployees" style="display: flex; align-items: center; gap: 8px;">
+                            <span>📊</span>
+                            <span>Export Excel</span>
+                        </button>
+                        <button class="btn-add" id="btnAddEmployee" onclick="openModal('employee')">
+                            <span>➕</span> Ajouter un employé
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <table id="employeesTable">
+                        <thead>
+                            <tr>
+                                <th>Nom Complet</th>
+                                <th>Poste</th>
+                                <th>Type de contrat</th>
+                                <th>Département</th>
+                                <th>Date d'entrée</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Leaves View -->
+            <div id="leavesView" class="view">
+                <div class="view-header">
+                    <h2>Gestion des Congés</h2>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-success" onclick="exportToExcel('leaves')" style="display: flex; align-items: center; gap: 8px;">
+                            <!-- <span>📊</span> -->
+                            <span>Export Excel</span>
+                        </button>
+                        <button class="btn-add" onclick="openModal('leave')">
+                            <span>➕</span> Nouvelle demande
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employé</th>
+                                <th>Type</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
+                                <th>Jours</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leavesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Absences View -->
+            <div id="absencesView" class="view">
+                <div class="view-header">
+                    <h2>Gestion des Absences</h2>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-success" onclick="exportToExcel('absences')" style="display: flex; align-items: center; gap: 8px;">
+                            <!-- <span>📊</span> -->
+                            <span>Export Excel</span>
+                        </button>
+                        <button class="btn-add" onclick="openModal('absence')">
+                            <span>➕</span> Déclarer une absence
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employé</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Durée</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="absencesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Documents View -->
+            <div id="documentsView" class="view">
+                <div class="view-header">
+                    <h2>Documents RH</h2>
+                    <button class="btn-add" id="btnAddDocument" onclick="openModal('document')">
+                        <span>➕</span> Ajouter un document
+                    </button>
+                </div>
+
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom du document</th>
+                                <th>Employé</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Alternants View -->
+            <div id="alternantsView" class="view">
+                <div class="view-header">
+                    <h2>Gestion des Alternants & Stagiaires</h2>
+                    <button class="btn-add" id="btnAddAlternant" onclick="openModal('alternant')">
+                        <span>➕</span> Ajouter un alternant
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 24px;">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎓</div>
+                        <div class="stat-value" id="totalAlternants">0</div>
+                        <div class="stat-label">Total Alternants</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏢</div>
+                        <div class="stat-value" id="alternantsPresent">0</div>
+                        <div class="stat-label">En entreprise</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-value" id="alternantsSchool">0</div>
+                        <div class="stat-label">À l'école</div>
+                    </div>
+                </div>
+
+                <!-- Alternants List -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 600;">📋 Liste des Alternants</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Type</th>
+                                <th>Formation</th>
+                                <th>Pattern</th>
+                                <th>Statut actuel</th>
+                                <th>Jours d'absence</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alternantsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- Planning View -->
+                <div class="card">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 600;">📅 Planning de Présence</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block;">Sélectionner un alternant :</label>
+                        <select id="selectedAlternant" onchange="renderAlternantCalendar()" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; background: white; font-size: 14px;">
+                            <option value="">-- Choisir un alternant --</option>
+                        </select>
+                    </div>
+
+                    <div id="alternantCalendar" style="display: none;">
+                        <!-- Calendar Header -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                            <button onclick="changeMonth(-1)" class="btn btn-secondary">← Mois précédent</button>
+                            <h4 id="calendarMonth" style="font-size: 20px; font-weight: 600;"></h4>
+                            <button onclick="changeMonth(1)" class="btn btn-secondary">Mois suivant →</button>
+                        </div>
+
+                        <!-- Legend -->
+                        <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background: #10b981; border-radius: 4px;"></div>
+                                <span> Entreprise</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background: #3b82f6; border-radius: 4px;"></div>
+                                <span> École/Cours</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background: #f59e0b; border-radius: 4px;"></div>
+                                <span> Congé</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background: #ef4444; border-radius: 4px;"></div>
+                                <span> Absent</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background: #e5e7eb; border-radius: 4px;"></div>
+                                <span>Weekend</span>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #eff6ff; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <p style="margin: 0; font-size: 14px; color: #1e40af;">
+                                     <strong>Cliquez sur un jour</strong> pour changer son statut
+                                </p>
+                                <button class="btn btn-primary" onclick="openPeriodModifier()" style="white-space: nowrap;">
+                                     Modifier une période
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Calendar Grid -->
+                        <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
+                            <!-- Days will be generated by JavaScript -->
+                        </div>
+
+                        <!-- Horaires Section -->
+                        <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
+                            <h4 style="margin-bottom: 16px; font-size: 18px; font-weight: 600;"> Horaires de Travail</h4>
+                            <div id="alternantHoraires"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View (Admin Only) -->
+            <div id="settingsView" class="view">
+                <h2 style="font-size: 32px; margin-bottom: 32px; font-weight: 600;">⚙️ Paramètres Entreprise</h2>
+                
+                <!-- Company Information Card -->
+                <div class="card" style="max-width: 800px; margin-bottom: 24px;">
+                    <h3 style="font-size: 22px; margin-bottom: 24px; color: #f59e0b; font-weight: 600;">
+                        🏢 Informations de l'Entreprise
+                    </h3>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%); padding: 24px; border-radius: 12px; border: 2px solid rgba(245, 158, 11, 0.3);">
+                        <div style="margin-bottom: 16px;">
+                            <div style="font-size: 14px; color: #94a3b8; margin-bottom: 4px;">Nom de l'entreprise</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #f59e0b;" id="companyNameDisplay">-</div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">Code d'entreprise unique</div>
+                            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                <div style="font-size: 32px; font-weight: 800; color: #10b981; font-family: 'Courier New', monospace; letter-spacing: 6px; background: rgba(16, 185, 129, 0.1); padding: 12px 20px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3);" id="companyCodeDisplay">------</div>
+                                <button onclick="shareCompanyCode()" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; padding: 12px 24px;">
+                                    <!-- <span style="font-size: 20px;">📤</span> -->
+                                    <span>Partager</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 16px; border-radius: 8px;">
+                            <div style="font-size: 13px; color: #10b981; font-weight: 600; margin-bottom: 6px;">
+                                💡 Ce code est UNIQUE et PERMANENT
+                            </div>
+                            <div style="font-size: 13px; color: #94a3b8; line-height: 1.6;">
+                                • Partagez-le avec vos employés pour qu'ils rejoignent votre entreprise<br>
+                                • Ce code ne changera JAMAIS<br>
+                                • Chaque entreprise a son propre code unique
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="max-width: 800px;">
+                    <h3 style="font-size: 22px; margin-bottom: 24px; color: #f59e0b; font-weight: 600;">
+                        Configuration Self-Service Employé
+                    </h3>
+                    
+                    <div style="background: rgba(15, 23, 42, 0.4); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div>
+                                <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                    Accès Employé au SIRH
+                                </div>
+                                <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
+                                    Autorisez les employés à se connecter au système pour demander leurs congés et consulter leurs informations.
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="selfServiceToggle" onchange="toggleSelfService()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="selfServiceStatus" style="padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+                        <!-- Status will be inserted by JavaScript -->
+                    </div>
+
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 16px; border-radius: 8px;">
+                        <div style="font-size: 14px; color: #3b82f6; font-weight: 600; margin-bottom: 8px;">
+                            💡 Information
+                        </div>
+                        <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
+                            <strong style="color: #e2e8f0;">Si activé :</strong> Les employés pourront créer un compte et demander leurs propres congés.<br>
+                            <strong style="color: #e2e8f0;">Si désactivé :</strong> Seuls les Managers RH et Managers pourront accéder au système.
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(148, 163, 184, 0.1);">
+                        <h4 style="font-size: 18px; margin-bottom: 16px; color: #f59e0b;">Statistiques des Comptes</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                            <div style="background: rgba(245, 158, 11, 0.1); padding: 16px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: #f59e0b;" id="statsAdmins">0</div>
+                                <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Managers RH</div>
+                            </div>
+                            <div style="background: rgba(59, 130, 246, 0.1); padding: 16px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: #3b82f6;" id="statsManagers">0</div>
+                                <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Managers</div>
+                            </div>
+                            <div style="background: rgba(148, 163, 184, 0.1); padding: 16px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: #94a3b8;" id="statsEmployees">0</div>
+                                <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Employés</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-brand">SIRH Pro</span>
+                <span class="footer-separator">•</span>
+                <span class="footer-text">Système de gestion RH moderne</span>
+            </div>
+            <div class="footer-right">
+                <span class="footer-text">Créé par Dhellye</span>
+                <a href="https://dhellyes.fr/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <span class="footer-author">Retour au porfolio</span>
+                    <!-- <span class="footer-icon">🚀</span> -->
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle"></div>
+            <form id="modalForm">
+                <div id="modalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertOverlay" class="custom-alert-overlay">
+        <div class="custom-alert-box">
+            <div id="customAlertIcon" class="custom-alert-icon"></div>
+            <div id="customAlertTitle" class="custom-alert-title"></div>
+            <div id="customAlertMessage" class="custom-alert-message"></div>
+            <div id="customAlertButtons" class="custom-alert-buttons"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
