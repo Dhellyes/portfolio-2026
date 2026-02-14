@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZT00SRM4FK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZT00SRM4FK');
+    </script>
+    <!-- Fin Google Analytics -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comment les compétences PHP, SQL et MVC facilitent l'apprentissage de RPG, DB2 et IBM i. Comparaison technique entre développement web et mainframe.">
+    <meta name="keywords" content="PHP vers RPG, SQL vers DB2, transition développeur web IBM i, similitudes PHP RPG, apprendre RPG développeur web">
+    <title>De PHP/SQL à RPG/DB2 : Les similitudes qui facilitent la transition - Blog Dhellye EWEMBE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="blog-nav">
+        <div class="blog-nav-container">
+            <a href="../../index.html" class="blog-logo">
+                <span class="blog-logo-icon">📰</span>
+                <div class="blog-logo-text">
+                    <h1>Blog IBM i</h1>
+                    <p>par Dhellye EWEMBE</p>
+                </div>
+            </a>
+            <div class="blog-nav-links">
+                <a href="../../index.html" class="blog-nav-link">Portfolio</a>
+                <a href="../../cv/cv.html" class="blog-nav-link">CV</a>
+                <a href="../index.html" class="blog-nav-link active">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <article class="article-page">
+        <a href="../index.html" class="back-btn">← Retour aux articles</a>
+
+        <header class="article-header-page">
+            <h1>De PHP/SQL à RPG/DB2 : Les similitudes qui facilitent la transition</h1>
+            <div class="article-meta-page">
+                <span class="article-date">5 février 2025</span>
+                <span class="article-reading-time">7 min de lecture</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>
+                En tant que développeur web avec une expérience en PHP et SQL, j'ai découvert que <strong>la transition vers RPG et DB2 est bien plus naturelle qu'on ne le pense</strong>. Voici les parallèles techniques qui facilitent cet apprentissage.
+            </p>
+
+            <h2>SQL : Le pont entre les deux univers</h2>
+            <p>
+                <strong>C'est la bonne nouvelle :</strong> SQL reste SQL, que ce soit avec MySQL ou DB2 for i !
+            </p>
+            <p>
+                Les compétences SQL acquises en développement web sont <strong>directement transférables</strong> :
+            </p>
+            <ul>
+                <li><strong>SELECT</strong> : Requêtes de sélection identiques</li>
+                <li><strong>JOIN</strong> : INNER JOIN, LEFT JOIN fonctionnent pareil</li>
+                <li><strong>WHERE, GROUP BY, HAVING</strong> : Même syntaxe</li>
+                <li><strong>INSERT, UPDATE, DELETE</strong> : Opérations CRUD standards</li>
+                <li><strong>Transactions</strong> : BEGIN, COMMIT, ROLLBACK</li>
+            </ul>
+            <p>
+                <strong>Exemple concret :</strong>
+            </p>
+            <p>
+                En MySQL/PHP :
+            </p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+SELECT c.nom, c.prenom, COUNT(o.id) as nb_commandes
+FROM clients c
+LEFT JOIN commandes o ON c.id = o.client_id
+WHERE c.actif = 1
+GROUP BY c.id
+ORDER BY nb_commandes DESC;</pre>
+
+            <p>
+                En DB2 for i / RPG :
+            </p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+SELECT c.nom, c.prenom, COUNT(o.id) as nb_commandes
+FROM clients c
+LEFT JOIN commandes o ON c.id = o.client_id
+WHERE c.actif = '1'
+GROUP BY c.id
+ORDER BY nb_commandes DESC;</pre>
+
+            <p>
+                <strong>Presque identique !</strong>
+            </p>
+
+            <h2>Bases de données relationnelles : Même logique</h2>
+            <p>
+                La modélisation des données relationnelles est <strong>universelle</strong> :
+            </p>
+            <ul>
+                <li><strong>Tables</strong> : Structure identique (colonnes, types de données)</li>
+                <li><strong>Clés primaires et étrangères</strong> : Même concept</li>
+                <li><strong>Index</strong> : Pour optimiser les performances</li>
+                <li><strong>Contraintes</strong> : NOT NULL, UNIQUE, CHECK</li>
+                <li><strong>Relations</strong> : 1-to-many, many-to-many</li>
+            </ul>
+            <p>
+                Mon expérience en modélisation MySQL avec mes projets (ORGA-KEN, SIRH) m'a préparé à <strong>comprendre DB2 for i</strong> très rapidement.
+            </p>
+
+            <h2>Architecture MVC : Similitudes avec RPG</h2>
+            <p>
+                En PHP, j'ai travaillé avec l'architecture <strong>MVC (Modèle-Vue-Contrôleur)</strong>. RPG suit une logique similaire :
+            </p>
+            <ul>
+                <li><strong>Modèle</strong> : Gestion des données (DB2 for i)</li>
+                <li><strong>Vue</strong> : Affichage (écrans 5250 ou interfaces web)</li>
+                <li><strong>Contrôleur</strong> : Logique métier (programmes RPG)</li>
+            </ul>
+            <p>
+                <strong>Exemple comparé :</strong>
+            </p>
+            <p>
+                <strong>PHP/MVC :</strong>
+            </p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+// Contrôleur
+class ClientController {
+    public function getClient($id) {
+        $client = Client::find($id);  // Modèle
+        return view('client', $client);  // Vue
+    }
+}</pre>
+
+            <p>
+                <strong>RPG :</strong>
+            </p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+// Programme RPG (Contrôleur)
+Dcl-S clientId Int(10);
+Dcl-DS client LikeDS(ClientDS);
+
+exec sql SELECT * INTO :client
+         FROM clients
+         WHERE id = :clientId;  // Modèle
+
+exfmt CLIENTDSP;  // Vue (écran 5250)</pre>
+
+            <p>
+                <strong>La logique est la même !</strong> Séparer les responsabilités : données, logique, affichage.
+            </p>
+
+            <h2>CRUD : Les opérations de base</h2>
+            <p>
+                Les opérations <strong>CRUD (Create, Read, Update, Delete)</strong> que j'ai développées en PHP sont identiques en RPG :
+            </p>
+
+            <h3>CREATE (Créer)</h3>
+            <p><strong>PHP :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+$client = new Client();
+$client->nom = "Dupont";
+$client->prenom = "Jean";
+$client->save();</pre>
+
+            <p><strong>RPG :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+exec sql INSERT INTO clients (nom, prenom)
+         VALUES ('Dupont', 'Jean');</pre>
+
+            <h3>READ (Lire)</h3>
+            <p><strong>PHP :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+$clients = Client::where('actif', 1)->get();</pre>
+
+            <p><strong>RPG :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+exec sql SELECT * INTO :clientsArray
+         FROM clients
+         WHERE actif = '1';</pre>
+
+            <p>
+                <strong>Même logique métier, syntaxe légèrement différente.</strong>
+            </p>
+
+            <h2>Gestion des erreurs et transactions</h2>
+            <p>
+                La gestion des erreurs en PHP (try/catch) a son équivalent en RPG :
+            </p>
+            <p><strong>PHP :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+try {
+    DB::beginTransaction();
+    // Opérations...
+    DB::commit();
+} catch (Exception $e) {
+    DB::rollback();
+    echo "Erreur: " . $e->getMessage();
+}</pre>
+
+            <p><strong>RPG :</strong></p>
+            <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+exec sql SET OPTION COMMIT = *CHG;
+exec sql COMMIT;  // Valider
+exec sql ROLLBACK;  // Annuler
+
+monitor;
+    // Opérations...
+on-error;
+    // Gestion erreur
+endmon;</pre>
+
+            <p>
+                <strong>Le concept de transaction est universel.</strong>
+            </p>
+
+            <h2>Variables et types de données</h2>
+            <p>
+                Les types de données en PHP et RPG sont similaires :
+            </p>
+            <ul>
+                <li><strong>String</strong> (PHP) → <strong>CHAR/VARCHAR</strong> (RPG)</li>
+                <li><strong>Int</strong> (PHP) → <strong>INT</strong> (RPG)</li>
+                <li><strong>Float</strong> (PHP) → <strong>DECIMAL/NUMERIC</strong> (RPG)</li>
+                <li><strong>Boolean</strong> (PHP) → <strong>IND (Indicator)</strong> (RPG)</li>
+                <li><strong>Array</strong> (PHP) → <strong>Array/Data Structure</strong> (RPG)</li>
+            </ul>
+
+            <h2>Ce qui change (et c'est OK !)</h2>
+            <p>
+                Bien sûr, il y a des différences. Mais elles sont <strong>faciles à apprendre</strong> :
+            </p>
+            <ul>
+                <li><strong>Syntaxe RPG</strong> : Plus verbeux que PHP, mais logique</li>
+                <li><strong>Écrans 5250</strong> : Interface texte (mais on peut aussi faire du web !)</li>
+                <li><strong>DDS</strong> : Définition des fichiers (équivalent des migrations Laravel)</li>
+                <li><strong>CL (Control Language)</strong> : Scripts système (comme Bash)</li>
+            </ul>
+            <p>
+                <strong>Ces différences ne sont pas des obstacles, juste de nouvelles compétences à acquérir.</strong>
+            </p>
+
+            <h2>Mon avantage : Une base solide en développement backend</h2>
+            <p>
+                Mes projets en PHP/SQL m'ont donné une <strong>base solide</strong> pour aborder IBM i :
+            </p>
+            <ol>
+                <li><strong>Logique métier</strong> : Comprendre les besoins et les traduire en code</li>
+                <li><strong>SQL avancé</strong> : Jointures, sous-requêtes, optimisation</li>
+                <li><strong>Architecture MVC</strong> : Séparer les responsabilités</li>
+                <li><strong>CRUD</strong> : Créer, lire, modifier, supprimer des données</li>
+                <li><strong>Gestion d'erreurs</strong> : Try/catch, transactions</li>
+                <li><strong>Rigueur</strong> : Tests, debugging, documentation</li>
+            </ol>
+
+            <h2>Conclusion : La transition est naturelle</h2>
+            <p>
+                <strong>Si vous maîtrisez PHP et SQL, vous avez déjà 70% des compétences pour apprendre RPG et DB2.</strong>
+            </p>
+            <p>
+                Les concepts fondamentaux sont les mêmes :
+            </p>
+            <ul>
+                <li>Bases de données relationnelles</li>
+                <li>SQL</li>
+                <li>CRUD</li>
+                <li>Architecture séparée (MVC)</li>
+                <li>Gestion des erreurs et transactions</li>
+            </ul>
+            <p>
+                <strong>Il ne reste plus qu'à apprendre la syntaxe RPG.</strong> Et c'est exactement ce que je vais faire avec ma formation POEI !
+            </p>
+            <p>
+                Dans le prochain article, je détaillerai comment j'ai préparé ma candidature POEI IBM i. Stay tuned !
+            </p>
+        </div>
+
+        <footer class="article-footer">
+            <div class="article-footer-tags">
+                <span class="article-tag">#PHP</span>
+                <span class="article-tag">#RPG</span>
+                <span class="article-tag">#SQL</span>
+                <span class="article-tag">#DB2</span>
+                <span class="article-tag">#Transition</span>
+                <span class="article-tag">#Développement</span>
+            </div>
+
+            <div class="share-section">
+                <h3>Partager cet article</h3>
+                <div class="share-buttons">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://dhellyes.fr/blog/articles/php-sql-vers-rpg-db2.html" target="_blank" class="share-btn linkedin">
+                        Partager sur LinkedIn
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url=https://dhellyes.fr/blog/articles/php-sql-vers-rpg-db2.html&text=De%20PHP/SQL%20à%20RPG/DB2%20:%20Les%20similitudes%20qui%20facilitent%20la%20transition" target="_blank" class="share-btn twitter">
+                        Partager sur Twitter
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+        <a href="../index.html" class="back-btn" style="margin-top: 2rem;">← Retour aux articles</a>
+    </article>
+
+    <!-- Footer -->
+    <footer class="blog-footer">
+        <p>&copy; 2025 Dhellye EWEMBE - Futur Développeur IBM i / AS/400</p>
+        <p><a href="../../index.html">Retour au portfolio</a></p>
+    </footer>
+</body>
+</html>
